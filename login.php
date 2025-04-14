@@ -1,13 +1,14 @@
-<?php include('config/constants.php'); ?>
+<?php include('../config/constants.php')?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Bite</title>
-    <link rel="stylesheet" href="css/login.css">
-    <link rel="icon" href="images/logo.png" type="image/x-icon">
+    <title>Smart Bite Admin pannel</title>
+
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="icon" href="../images/logo.png" type="image/x-icon">
 </head>
 
 
@@ -26,7 +27,7 @@ if(isset($_SESSION['no-login-message']))
   <div class="popup-content">
       <h2 class='black'>!! Login Required !!</h2>
       <br>
-      <p class='black'>please login to access Smart Bite🌝</p>
+      <p class='black'>please login to access admin pannel🌝</p>
       <br>
       <button id="close-popup">OK</button>
   </div>
@@ -43,12 +44,12 @@ if(isset($_SESSION['no-login-message']))
 
       // Close the popup box when the close button is clicked
       closePopup.onclick = function() {
-          window.location.href="<?php echo SITEURL ;?>login.php";
+          window.location.href="<?php echo SITEURL ;?>admin/login.php";
       }
 
       showPopup();
       </script>
-  <?php
+      <?php
   unset($_SESSION['no-login-message']);
 }
 if(isset($_SESSION['add']))
@@ -58,7 +59,7 @@ if(isset($_SESSION['add']))
   <div class="popup-content">
       <h2 class='black'>!! Account created !!</h2>
       <br>
-      <p class='black'>please login to access Smart Bite🌝</p>
+      <p class='black'>please login to access admin pannel🌝</p>
       <br>
       <button id="close-popup">OK</button>
   </div>
@@ -75,7 +76,7 @@ if(isset($_SESSION['add']))
 
       // Close the popup box when the close button is clicked
       closePopup.onclick = function() {
-          window.location.href="<?php echo SITEURL ;?>login.php";
+          window.location.href="<?php echo SITEURL ;?>admin/login.php";
       }
 
       showPopup();
@@ -86,22 +87,23 @@ if(isset($_SESSION['add']))
 ?>
   <div class="container">
     <div class="logo">
-      <img src="images/logo.png" alt="Smart Bite Logo" class="img-responsive">
+    <img src="../images/logo.png" alt="Smart Bite Logo" class="img-responsive">
     </div>
     <div class="background">
     <div class="shape"></div>
     <div class="shape-2"></div>
     <div class="shape-3">
-      <h1 class="head">Welcome</h1>
+      <h1 class="head1">Welcome </h1>
+      <h3 class="head2">Admin panel</h3>
     </div>
     <div class="overlay">
-      <img src="images/overlay.png" alt=" overlay" class="img-size">
+      <img src="../images/overlay.png" alt=" overlay" class="img-size">
     </div>
     <div class="overlay2">
-      <img src="images/overlay2.png" alt=" overlay" class="img-size">
+      <img src="../images/overlay2.png" alt=" overlay" class="img-size">
     </div>
     <div class="img">
-      <img src="images/burger-login.png" alt="Smart Bite Logo" class="img-size">
+      <img src="../images/burger-login.png" alt="Smart Bite Logo" class="img-size">
     </div>
 
       <div class="clearfix"></div>
@@ -117,7 +119,7 @@ if(isset($_SESSION['add']))
         <button type="submit" name="submit" class="btn btn-primary">login</button>
         <br>
         
-        <p class="acnt">Don't have an account.<a href="<?php echo SITEURL;?>signup.php">create now</a></p>
+        <p class="acnt">Don't have an account.<a href="<?php echo SITEURL;?>admin/signup.php">create now</a></p>
 
 
       </form>
@@ -132,25 +134,21 @@ if(isset($_POST['submit']))
   $username=$_POST['username'];
   $password=md5($_POST['password']);
 
-  $sql="SELECT * FROM tbl_user WHERE username='$username' AND password='$password'";
+  $sql="SELECT * FROM tbl_admin WHERE username='$username' AND password='$password'";
   $res=mysqli_query($conn,$sql);
 
   $count = mysqli_num_rows($res);
   
   if($count==1)
   {
-    $row=mysqli_fetch_assoc($res);
-    $id=$row['u_id'];
     $_SESSION['login'] = "<div class='text-center sucess'>login sucessfull.</div>";
-    $_SESSION['user'] = $username;
-    $_SESSION['user_id']=$id;
-    echo "$id";
-    header('location:'.SITEURL);
+    $_SESSION['ad_user'] = $username;
+    header('location:'.SITEURL.'admin/');
   }
   else
   {
     $_SESSION['login'] = "<div class='text-center error'>Login fail</div>";
-    header('location:'.SITEURL.'/login.php');
+    header('location:'.SITEURL.'admin/login.php');
   }
 }
 
